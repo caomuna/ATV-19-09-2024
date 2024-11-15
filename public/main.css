@@ -1,0 +1,78 @@
+/* Estilo global */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f9;
+}
+
+h1 {
+    color: #333;
+}
+
+/* Estilo para o formulário */
+form {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 50px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Estilo do container de dados */
+#data-container {
+    margin-top: 20px;
+    white-space: pre-wrap;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-width: 500px;
+}
+
+/* Estilo do botão de logout */
+#logout-button {
+    margin-top: 20px;
+    background-color: #d9534f;
+    padding: 10px;
+}
+
+#logout-button:hover {
+    background-color: #c9302c;
+}

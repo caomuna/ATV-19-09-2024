@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Token Management</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+  <h1>Token Management</h1>
+  <p>Abra o console do navegador para ver os logs</p>
+
+  <form id="login-form">
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit">Login</button>
+  </form>
+
+  <button class="get-token">Get Token User</button>
+  <button class="get-users">Get Users</button>
+  <button class="logout">Logout</button>
+
+  <pre>...</pre>
+
+  <script>
+    const pre = document.querySelector('pre');
+
+    const form = document.getElementById('login-form');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      
+      const username = form.username.value;
+      const password = form.password.value;
+
+      try {
+        const response = await fetch('/login', { 
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+        pre.textContent = response.status + "\n" + JSON.stringify(data, null, 2);
+
+        if (!response.ok) {
+          console.error('Login falhou', data);
+          alert('Login falhou');
+          return;
+        }
+
+        console.log('Login bem-sucedido', data);
+        localStorage.setItem('token', data.token);
+        alert('Login bem-sucedido!');
+        window.location.href = 'registrar.html';
+      } catch (error) {
+        console.error('Erro ao fazer login:', error);
+        alert('Erro ao fazer login');
+      }
+    });
+
+    document.querySelector('button.get-token').addEventListener('click', async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Por favor, faça login primeiro');
+        return;
+      }
+
+      const response = await fetch(`/token/user`, { 
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      const data = await response.json();
+      pre.textContent = response.status + "\n" + JSON.stringify(data, null, 2);
+
+      if (!response.ok) {
+        console.error('Falha ao obter dados do usuário', data);
+        alert('Token inválido');
+        return;
+      }
+
+      console.log('Dados do usuário obtidos', data);
+    });
+
+    document.querySelector('button.get-users').addEventListener('click', async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Por favor, faça login primeiro');
+        return;
+      }
+
+      const response = await fetch(`/users`, { 
+        headers: { 'Authorization': `Bearer ${token}` } 
+      });
+
+      const data = await response.json();
+      pre.textContent = response.status + "\n" + JSON.stringify(data, null, 2);
+
+      if (!response.ok) {
+        console.error('Falha ao obter lista de usuários', data);
+        alert('Token inválido');
+        return;
+      }
+
+      console.log('Lista de usuários obtida com sucesso', data);
+    });
+
+    document.querySelector('button.logout').addEventListener('click', async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Você não está logado');
+        return;
+      }
+
+      const response = await fetch(`/token/logout`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      pre.textContent = response.status;
+
+      if (!response.ok) {
+        console.error('Logout falhou');
+        alert('Logout falhou');
+        return;
+      }
+
+      console.log('Logout bem-sucedido');
+      localStorage.removeItem('token'); 
+      alert('Logout bem-sucedido!');
+    });
+
+  </script>
+  <script src="main.js"></script>
+</body>
+</html>
