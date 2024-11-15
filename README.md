@@ -14,6 +14,7 @@ Este projeto implementa um sistema de autenticação de usuário com JSON Web To
 - [npm](https://www.npmjs.com/)
 
 ## Estrutura do Projeto
+
 ````
 projeto/ ├── public/ │ ├── index.html
 │ ├── registrar.html
@@ -22,9 +23,7 @@ projeto/ ├── public/ │ ├── index.html
 ├── server.js
 ├── package.json
 └── README.md
-
-bash
-Copiar código
+````
 
 ## Passo a Passo para Configuração
 
@@ -35,22 +34,31 @@ Copiar código
    cd nome-do-repositorio
 Instale as dependências:
 
-bash
-Copiar código
+````bash
 npm install
+````
 Configuração do Banco de Dados:
 
 Crie um arquivo .env com o conteúdo abaixo:
 
-env
+
+````env
 Copiar código
 DATABASE_URL="sua-url-de-banco-de-dados"
 JWT_SECRET="sua-chave-secreta-para-jwt"
 Inicie o servidor:
-
-bash
-Copiar código
+````
+````bash
 node server.js
+env
+DATABASE_URL="sua-url-de-banco-de-dados"
+JWT_SECRET="sua-chave-secreta-para-jwt"
+````
+Inicie o servidor:
+
+````bash
+node server.js
+````
 Acesse o sistema:
 
 Abra seu navegador e vá para http://localhost:3000/index.html.
@@ -70,6 +78,7 @@ Logout:
 
 Na página registrar.html, clique no botão de logout para encerrar a sessão.
 Tecnologias Utilizadas
+
 Node.js e Express
 jsonwebtoken
 HTML, CSS e JavaScript
